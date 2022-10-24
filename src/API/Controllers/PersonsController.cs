@@ -23,13 +23,21 @@ public class PersonsController : ControllerBase
     [HttpGet("{id:int}")]
     public async Task<ActionResult<PersonDto>> GetByIdAsync(int id)
     {
-        return Ok(new PersonDto());
+        var e = await _dbContext.Set<Person>()
+            .FirstOrDefaultAsync(x => x.Id == id);
+        
+        if (e == null) return NotFound();
+        
+        return Ok(_mapper.Map<PersonDto>(e));
     }
 
     [HttpGet]
     public async Task<ActionResult<List<PersonDto>>> GetAllAsync()
     {
-        return Ok(new List<Person>());
+        var lst = await _dbContext.Set<Person>()
+            .ToListAsync();
+        
+        return Ok(_mapper.Map<List<PersonDto>>(lst));
     }
 
     [HttpPost]
@@ -55,13 +63,27 @@ public class PersonsController : ControllerBase
     [HttpPatch("{id:int}")]
     public async Task<ActionResult<PersonDto>> UpdateAsync([FromBody] PersonUpdateDto dto, int id)
     {
-        return Ok(new PersonDto());
+        var e = await _dbContext.Set<Person>()
+            .FirstOrDefaultAsync(x => x.Id == id);
+        
+        if (e == null) return NotFound();
+
+        MapUpdateDtoToEntity(e, dto);
+
+        await _dbContext.SaveChangesAsync();
+        
+        return Ok(_mapper.Map<PersonDto>(e));
     }
 
     [HttpDelete("{id:int}")]
     public async Task<IActionResult> RemoveAsync(int id)
     {
-        return Ok();
+        var e = await _dbContext.Set<Person>()
+            .FirstOrDefaultAsync(x => x.Id == id);
+        
+        if (e == null) return NotFound();
+        
+        return NoContent();
     }
 
     private void MapUpdateDtoToEntity(Person e, PersonUpdateDto dto)
