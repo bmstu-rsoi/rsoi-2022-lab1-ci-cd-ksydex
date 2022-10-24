@@ -39,7 +39,7 @@ var services = scope.ServiceProvider;
 
 try
 {
-    var context = services.GetRequiredService<DbContext>();
+    var context = services.GetRequiredService<AppDbContext>();
     context.Database.Migrate();
 }
 catch (Exception e)
