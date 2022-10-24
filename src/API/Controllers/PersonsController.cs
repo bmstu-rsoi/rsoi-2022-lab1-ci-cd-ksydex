@@ -19,7 +19,7 @@ public class PersonsController : ControllerBase
     [HttpGet("{id:int}")]
     public async Task<ActionResult<PersonDto>> GetByIdAsync(int id)
     {
-        
+        return Ok(new PersonDto());
     }
     
     [HttpGet]
