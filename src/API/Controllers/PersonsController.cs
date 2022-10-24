@@ -1,3 +1,4 @@
+using API.Data;
 using API.Data.Dtos;
 using API.Data.Entities;
 using AutoMapper;
@@ -11,9 +12,9 @@ namespace API.Controllers;
 public class PersonsController : ControllerBase
 {
     private readonly IMapper _mapper;
-    private readonly DbContext _dbContext;
+    private readonly AppDbContext _dbContext;
 
-    public PersonsController(IMapper mapper, DbContext dbContext)
+    public PersonsController(IMapper mapper, AppDbContext dbContext)
     {
         _mapper = mapper;
         _dbContext = dbContext;
