@@ -82,6 +82,9 @@ public class PersonsController : ControllerBase
             .FirstOrDefaultAsync(x => x.Id == id);
         
         if (e == null) return NotFound();
+
+        _dbContext.Remove(e);
+        await _dbContext.SaveChangesAsync();
         
         return NoContent();
     }
@@ -94,5 +97,7 @@ public class PersonsController : ControllerBase
             e.Age = dto.Age.Value;
         if (dto.Address != null)
             e.Address = dto.Address;
+        if (dto.Work != null)
+            e.Work = dto.Work;
     }
 }
