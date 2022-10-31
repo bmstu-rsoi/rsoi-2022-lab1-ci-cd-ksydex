@@ -15,7 +15,18 @@ jobs:
         with:
           fetch-depth: 0
 
-      # TODO build, test and deploy project
+      
+      - name: Checkout
+        uses: actions/checkout@v2
+      
+      - name: Docker build
+        run: docker login --username=_ --password=$HEROKU_API_KEY registry.heroku.com
+      
+      - name: Publish
+        working-directory: ./src/API
+        run: |
+         heroku container:push web -a $APP_NAME
+         heroku container:release web -a $APP_NAME
 
       - name: Run API Tests
         uses: matt-ball/newman-action@master
