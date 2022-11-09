@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 namespace API.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("api/v1/[controller]")]
 public class PersonsController : ControllerBase
 {
     private readonly IMapper _mapper;
