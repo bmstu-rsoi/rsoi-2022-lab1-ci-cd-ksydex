@@ -14,15 +14,15 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddSwaggerGen();
-builder.Services.AddAutoMapper(x =>
-{
-    x.AddProfile<DefaultMappingProfile>();
-});
+builder.Services.AddAutoMapper(x => { x.AddProfile<DefaultMappingProfile>(); });
 
 builder.Services.AddDbContext<AppDbContext>(x =>
 {
     x.UseSnakeCaseNamingConvention();
-    x.UseNpgsql(configuration.GetConnectionString("DefaultConnection"));
+    x.UseNpgsql((environment.IsProduction()
+                    ? Environment.GetEnvironmentVariable("DATABASE_URL")
+                    : configuration.GetConnectionString("DefaultConnection")) ??
+                throw new NullReferenceException("Database URL is not set!"));
 });
 
 var app = builder.Build();
