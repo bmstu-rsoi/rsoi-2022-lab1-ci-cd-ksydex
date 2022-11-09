@@ -20,7 +20,7 @@ jobs:
         uses: actions/checkout@v2
       
       - name: Docker build
-        run: docker login --username=_ --password=$HEROKU_API_KEY registry.heroku.com
+        run: winpty docker login --username=_ --password=$HEROKU_API_KEY registry.heroku.com
       
       - name: Publish
         working-directory: ./src/API
