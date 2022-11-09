@@ -49,7 +49,7 @@ catch (Exception e)
     logger.LogError(e, "An error occurred seeding the DB");
 }
 
-app.UseHttpsRedirection();
+// app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
 app.Run();
