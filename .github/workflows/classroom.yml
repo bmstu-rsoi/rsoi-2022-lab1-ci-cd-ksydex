@@ -35,7 +35,6 @@ jobs:
           heroku_app_name: ${{secrets.APP_NAME}}
           heroku_email: ${{secrets.HEROKU_EMAIL}}
           usedocker: true
-          appdir: ./src/API
 
       - name: Run API Tests
         uses: matt-ball/newman-action@master
