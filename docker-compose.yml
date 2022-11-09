@@ -14,5 +14,11 @@ services:
     ports:
       - "5432:5432"
 
+  api-server:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    restart: always
+
 volumes:
   db-data:
