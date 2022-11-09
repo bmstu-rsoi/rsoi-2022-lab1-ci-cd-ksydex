@@ -17,7 +17,7 @@ services:
   api-server:
     build:
       context: .
-      dockerfile: ./Dockerfile
+      dockerfile: ./src/API/Dockerfile
     restart: always
 
 volumes:
