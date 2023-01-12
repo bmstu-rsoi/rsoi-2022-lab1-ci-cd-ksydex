@@ -20,8 +20,8 @@ builder.Services.AddDbContext<AppDbContext>(x =>
 {
     x.UseSnakeCaseNamingConvention();
     x.UseNpgsql((environment.IsProduction()
-                    ? GetProductionDbConnectionString()
-                    : configuration.GetConnectionString("DefaultConnection")) ??
+                    ? GetProductionDbConnectionString(null)
+                    : GetProductionDbConnectionString(configuration.GetConnectionString("DefaultConnection"))) ??
                 throw new NullReferenceException("Database URL is not set!"));
 });
 
@@ -54,9 +54,9 @@ app.UseAuthorization();
 app.MapControllers();
 app.Run();
 
-static string? GetProductionDbConnectionString()
+static string? GetProductionDbConnectionString(string? v)
 {
-    var connectionUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
+    var connectionUrl = v ?? Environment.GetEnvironmentVariable("DATABASE_URL");
 
     if (connectionUrl == null) return null;
     
